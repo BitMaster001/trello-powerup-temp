@@ -28,8 +28,10 @@ TrelloPowerUp.initialize({
       text: 'Complete',
       callback: async function (t) {
         try {
-          const response = await t.card("id");
-          console.log("🚀 ~ file: capability.ts:35 ~ callback: ~ response", JSON.stringify(response));
+          const card = await t.card("id");
+          // const cardId = card.id;
+          const lists = await t.lists("id", "name");
+          console.log("🚀 ~ file: client.js:34 ~ lists", lists);
           return;
         }
         catch (e) {
