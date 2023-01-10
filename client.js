@@ -7,7 +7,7 @@ const assignCardToList = (cardId, listId) => {
     body: JSON.stringify({
       key: trelloKey,
       token: trelloToken,
-      value: listId
+      idList: listId
     })
   }, function (error, response, body) {
     if (error) {
