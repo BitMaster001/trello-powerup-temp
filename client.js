@@ -6,14 +6,6 @@ const assignCardToList = async (cardId, listId) => {
   return await response.json();
 }
 
-const getLabelsOnTheBoard = async (boardId) => {
-  const response = await fetch(`https://trello.com/1/boards/${boardId}/labels?key=${trelloKey}&token=${trelloToken}`, {
-    method: "GET"
-  });
-
-  return await response.json();
-}
-
 const addMemberToCard = async (cardId, memberId) => {
   const response = await fetch(`https://trello.com/1/cards/${cardId}?key=${trelloKey}&token=${trelloToken}&idMembers=${memberId}`, {
     method: "POST"
@@ -39,26 +31,33 @@ TrelloPowerUp.initialize({
         const card = await t.card("id");
         const cardId = card?.id;
         const board = await t.board("id", "labels");
-        console.log("🚀 ~ file: client.js:34 ~ board", board);
         const boardId = board?.id;
         const boardLabels = board?.labels;
+        const doneLabelId = boardLabels.filter(label => label.name === "Done")?.at(0)?.id;
 
         const member = await t.member("id");
         console.log("🚀 ~ file: client.js:47 ~ member", member);
         const memberId = member?.id;
-
-        // const labels = await getLabelsOnTheBoard(boardId);
 
         const lists = await t.lists("id", "name");
         const listId = lists.filter(list => list.name === "Design")?.at(0)?.id;
 
         try {
           const response1 = await assignCardToList(cardId, listId);
-          const response2 = await addLabelsToCard(cardId, labelId);
+          const response2 = await addLabelsToCard(cardId, doneLabelId);
+          const response3 = await addMemberToCard(cardId, memberId);
           t.alert({
-            message: response?.id ? "Success" : "Failure",
+            message: response1?.id ? "Moved Card Successfully" : "Failed To Move Card",
             duration: 2
-          })
+          });
+          t.alert({
+            message: response2?.id ? "Added Done Label Successfully" : "Failed To Add Done Label",
+            duration: 2
+          });
+          t.alert({
+            message: response3?.id ? "Added You Successfully To The Card" : "Failed To Add You To The Card",
+            duration: 2
+          });
         }
         catch (e) {
           console.error(e);
