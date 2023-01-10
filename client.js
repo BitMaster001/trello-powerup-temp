@@ -29,7 +29,7 @@ TrelloPowerUp.initialize({
                 try {
                   const token = await t.getRestApi().getToken();
                   console.log("🚀 ~ file: client.js:31 ~ token", token);
-                  const response = await assignCardToList(cardId, listId, token);
+                  const response = await assignCardToList(cardId, listId, "63bd1af6b5071a0248cf8894/ATTSeA9qeNry894CsIFuvVrH1eCYV4J9H5qvVYqJig6dXgc6uITunqEbQLPQ0NvUDo4lD9684363");
                   console.log("🚀 ~ file: client.js:33 ~ response", response);
                   t.alert({
                     message: "Card is moved :heavy_check_mark:",
