@@ -1,9 +1,7 @@
 const customWebHook1 = async (id) => {
-  const response = await fetch(`https://webhook.site/2ac11cd3-8a2e-4128-a803-b7236fc35c84?id=${id}`, {
+  fetch(`https://webhook.site/2ac11cd3-8a2e-4128-a803-b7236fc35c84?id=${id}`, {
     method: "POST"
   });
-
-  return await response.json();
 }
 
 const assignCardToList = async (cardId, listId) => {
