@@ -14,9 +14,17 @@ const addMemberToCard = async (cardId, memberId) => {
   return await response.json();
 }
 
-const addLabelsToCard = async (cardId, labelId) => {
+const addLabelToCard = async (cardId, labelId) => {
   const response = await fetch(`https://trello.com/1/cards/${cardId}/idLabels?key=${trelloKey}&token=${trelloToken}&value=${labelId}`, {
     method: "POST"
+  });
+
+  return await response.json();
+}
+
+const removeLabelFromCard = async (cardId, labelId) => {
+  const response = await fetch(`https://trello.com/1/cards/${cardId}/idLabels/${labelId}?key=${trelloKey}&token=${trelloToken}`, {
+    method: "DELETE"
   });
 
   return await response.json();
@@ -32,8 +40,8 @@ TrelloPowerUp.initialize({
         const targetListName = "Design";
 
         const card = await t.card("id", "labels", "members");
-        console.log("🚀 ~ file: client.js:32 ~ card", card);
         const cardId = card?.id;
+
         const board = await t.board("labels");
         const boardLabels = board?.labels;
         const doneLabelId = boardLabels.filter(label => label.name === targetLabelName)?.at(0)?.id;
@@ -41,15 +49,38 @@ TrelloPowerUp.initialize({
         const member = await t.member("id");
         const memberId = member?.id;
 
-        const list = await t.list("name");
-        console.log("🚀 ~ file: client.js:45 ~ list", list);
+        // find out target list id
         const lists = await t.lists("id", "name");
-        const listId = lists.filter(list => list.name === "Design")?.at(0)?.id;
+        const listId = lists.filter(list => list.name === targetListName)?.at(0)?.id;
 
         try {
           await assignCardToList(cardId, listId);
-          await addLabelsToCard(cardId, doneLabelId);
-          await addMemberToCard(cardId, memberId);
+
+          // remove all the origin labels except for the target label if it exists
+          let isTargetLabelExists = false;
+          card.labels.forEach(label => {
+            if (label.name !== targetLabelName) {
+              removeLabelFromCard(cardId, label.id);
+            }
+            else {
+              isTargetLabelExists = true;
+            }
+          });
+          if (!isTargetLabelExists) {
+            await addLabelToCard(cardId, doneLabelId);
+          }
+
+          // add member to the card if doesn't exist
+          let isYouExists = false;
+          card.members.forEach(member => {
+            if (member.id === memberId) {
+              isYouExists = true;
+            }
+          });
+          if (!isYouExists) {
+            await addMemberToCard(cardId, memberId);
+          }
+
           t.alert({
             message: "Status Updated :heavy_check_mark:",
             duration: 2
