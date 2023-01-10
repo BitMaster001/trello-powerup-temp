@@ -28,7 +28,7 @@ TrelloPowerUp.initialize({
       text: 'Complete',
       callback: async function (t) {
         try {
-          const response = await tc.card("id");
+          const response = await t.card("id");
           console.log("🚀 ~ file: capability.ts:35 ~ callback: ~ response", JSON.stringify(response));
           return;
         }
