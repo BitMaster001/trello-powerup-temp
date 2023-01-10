@@ -4,11 +4,11 @@ const trelloToken = "ATTA7df39b453340ef94e5fb4296d51a29bd30dd6b49ee24a28f62bf0ae
 const assignCardToList = (cardId, listId) => {
   fetch(`https://trello.com/1/cards/${cardId}/idList`, {
     method: "PUT",
-    body: {
+    body: JSON.stringify({
       key: trelloKey,
       token: trelloToken,
       value: listId
-    }
+    })
   }, function (error, response, body) {
     if (error) {
       console.error(error);
@@ -29,7 +29,7 @@ TrelloPowerUp.initialize({
         const cardId = card.id;
         const lists = await t.lists("id", "name");
         const listId = lists.filter(list => list.name === "Design")?.at(0)?.id;
-        
+
         try {
           assignCardToList(cardId, listId);
         }
