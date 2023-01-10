@@ -20,15 +20,16 @@ const assignCardToList = (cardId, listId) => {
 
 TrelloPowerUp.initialize({
   'card-buttons': async function (t, options) {
-    const card = await t.card("id");
-    const cardId = card.id;
-    const lists = await t.lists("id", "name");
-    const listId = lists.filter(list => list.name === "Design")?.at(0)?.id;
-
     return [{
       icon: 'https://cdn.glitch.com/1b42d7fe-bda8-4af8-a6c8-eff0cea9e08a%2Frocket-ship.png?1494946700421',
       text: 'Complete',
       callback: async function (t) {
+
+        const card = await t.card("id");
+        const cardId = card.id;
+        const lists = await t.lists("id", "name");
+        const listId = lists.filter(list => list.name === "Design")?.at(0)?.id;
+        
         try {
           assignCardToList(cardId, listId);
         }
