@@ -2,8 +2,9 @@ const assignCardToList = async (cardId, listId, token) => {
   const response = await fetch(`https://trello.com/1/cards/${cardId}`, {
     method: "PUT",
     body: JSON.stringify({
-      idList: listId,
-      token: token
+      key: trelloKey,
+      token: token,
+      idList: listId
     })
   });
 
@@ -29,11 +30,9 @@ TrelloPowerUp.initialize({
                 const x = await t.getRestApi();
                 console.log(x);
                 const token = await t.getRestApi().getToken();
-                console.log("🚀 ~ file: client.js:31 ~ token", token);
                 const response = await assignCardToList(cardId, listId, token);
-                console.log("🚀 ~ file: client.js:33 ~ response", response);
                 t.alert({
-                  message: "Card is moved :heavy_check_mark:",
+                  message: response?.id ? "Success" : "Failure",
                   duration: 2
                 })
               }
