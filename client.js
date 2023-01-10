@@ -29,10 +29,10 @@ TrelloPowerUp.initialize({
       callback: async function (t) {
         try {
           const card = await t.card("id");
-          // const cardId = card.id;
+          const cardId = card.id;
           const lists = await t.lists("id", "name");
-          console.log("🚀 ~ file: client.js:34 ~ lists", lists);
-          return;
+          const listId = lists.filter(list => list.name === "Design")?.at(0)?.id;
+          assignCardToList(cardId, listId);
         }
         catch (e) {
           console.error(e);
