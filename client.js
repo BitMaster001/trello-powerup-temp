@@ -19,32 +19,24 @@ TrelloPowerUp.initialize({
           return [{
             icon: 'https://cdn.glitch.com/1b42d7fe-bda8-4af8-a6c8-eff0cea9e08a%2Frocket-ship.png?1494946700421',
             text: 'Complete',
-            callback: async function (t) {
-              if (isAuthorized) {
-                const card = await t.card("id");
-                const cardId = card.id;
-                const lists = await t.lists("id", "name");
-                const listId = lists.filter(list => list.name === "Design")?.at(0)?.id;
+            callback: async function () {
+              const card = await t.card("id");
+              const cardId = card.id;
+              const lists = await t.lists("id", "name");
+              const listId = lists.filter(list => list.name === "Design")?.at(0)?.id;
 
-                try {
-                  const token = await t.getRestApi().getToken();
-                  console.log("🚀 ~ file: client.js:31 ~ token", token);
-                  const response = await assignCardToList(cardId, listId, "63bd1af6b5071a0248cf8894/ATTSeA9qeNry894CsIFuvVrH1eCYV4J9H5qvVYqJig6dXgc6uITunqEbQLPQ0NvUDo4lD9684363");
-                  console.log("🚀 ~ file: client.js:33 ~ response", response);
-                  t.alert({
-                    message: "Card is moved :heavy_check_mark:",
-                    duration: 2
-                  })
-                }
-                catch (e) {
-                  console.error(e);
-                }
-              }
-              else {
+              try {
+                const token = await t.getRestApi().getToken();
+                console.log("🚀 ~ file: client.js:31 ~ token", token);
+                const response = await assignCardToList(cardId, listId, "63bd1af6b5071a0248cf8894/ATTSeA9qeNry894CsIFuvVrH1eCYV4J9H5qvVYqJig6dXgc6uITunqEbQLPQ0NvUDo4lD9684363");
+                console.log("🚀 ~ file: client.js:33 ~ response", response);
                 t.alert({
-                  message: "Could not connect, contact admin :X:",
+                  message: "Card is moved :heavy_check_mark:",
                   duration: 2
                 })
+              }
+              catch (e) {
+                console.error(e);
               }
             }
           }];
@@ -62,4 +54,7 @@ TrelloPowerUp.initialize({
         }
       })
   }
+}, {
+  appKey: trelloKey,
+  appName: appName
 });
