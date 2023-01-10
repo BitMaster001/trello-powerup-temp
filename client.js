@@ -1,5 +1,5 @@
 const trelloKey = "e09972fad7a1cef5121e81cfea900c23";
-const trelloToken = "ATTA7df39b453340ef94e5fb4296d51a29bd30dd6b49ee24a28f62bf0ae906a894a633B05B07";
+const trelloToken = "63bd1af6b5071a0248cf8894/ATTSeA9qeNry894CsIFuvVrH1eCYV4J9H5qvVYqJig6dXgc6uITunqEbQLPQ0NvUDo4lD9684363";
 
 const assignCardToList = (cardId, listId) => {
   fetch(`https://trello.com/1/cards/${cardId}`, {
