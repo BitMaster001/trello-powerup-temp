@@ -2,10 +2,9 @@ const trelloKey = "e09972fad7a1cef5121e81cfea900c23";
 const trelloToken = "63bd1af6b5071a0248cf8894/ATTSeA9qeNry894CsIFuvVrH1eCYV4J9H5qvVYqJig6dXgc6uITunqEbQLPQ0NvUDo4lD9684363";
 
 const assignCardToList = (cardId, listId) => {
-  fetch(`https://trello.com/1/cards/${cardId}`, {
+  fetch(`https://api.trello.com/1/cards/${cardId}?key=${trelloKey}&token=${trelloToken}`, {
     method: "PUT",
     body: JSON.stringify({
-      token: trelloToken,
       idList: listId
     })
   }, function (error, response, body) {
