@@ -2,7 +2,10 @@ const assignCardToList = async (cardId, listId, token) => {
   const response = await fetch(`https://trello.com/1/cards/${cardId}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": "OAuth",
+      "oauth_consumer_key": trelloKey,
+      "oauth_token": token
     },
     body: JSON.stringify({
       key: trelloKey,
