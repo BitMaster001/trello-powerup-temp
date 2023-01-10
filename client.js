@@ -62,7 +62,4 @@ TrelloPowerUp.initialize({
         }
       })
   }
-}, {
-  appKey: trelloKey,
-  appName: appName
 });
