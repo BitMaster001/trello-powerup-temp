@@ -7,7 +7,7 @@ const assignCardToList = async (cardId, listId) => {
 }
 
 const addMemberToCard = async (cardId, memberId) => {
-  const response = await fetch(`https://trello.com/1/cards/${cardId}?key=${trelloKey}&token=${trelloToken}&idMembers=${memberId}`, {
+  const response = await fetch(`https://trello.com/1/cards/${cardId}/idMembers?key=${trelloKey}&token=${trelloToken}&value=${memberId}`, {
     method: "POST"
   });
 
@@ -15,7 +15,7 @@ const addMemberToCard = async (cardId, memberId) => {
 }
 
 const addLabelsToCard = async (cardId, labelId) => {
-  const response = await fetch(`https://trello.com/1/cards/${cardId}?key=${trelloKey}&token=${trelloToken}&idLabels=${labelId}`, {
+  const response = await fetch(`https://trello.com/1/cards/${cardId}/idLabels?key=${trelloKey}&token=${trelloToken}&value=${labelId}`, {
     method: "POST"
   });
 
@@ -44,16 +44,18 @@ TrelloPowerUp.initialize({
 
         try {
           const response1 = await assignCardToList(cardId, listId);
-          const response2 = await addLabelsToCard(cardId, doneLabelId);
-          const response3 = await addMemberToCard(cardId, memberId);
           t.alert({
             message: response1?.id ? "Moved Card Successfully" : "Failed To Move Card",
             duration: 2
           });
+
+          const response2 = await addLabelsToCard(cardId, doneLabelId);
           t.alert({
             message: response2?.id ? "Added Done Label Successfully" : "Failed To Add Done Label",
             duration: 2
           });
+
+          const response3 = await addMemberToCard(cardId, memberId);
           t.alert({
             message: response3?.id ? "Added You Successfully To The Card" : "Failed To Add You To The Card",
             duration: 2
