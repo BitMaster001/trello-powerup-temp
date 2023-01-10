@@ -1,11 +1,11 @@
 const assignCardToList = async (cardId, listId) => {
-  const response = await fetch(`https://trello.com/1/cards/${cardId}`, {
+  const response = await fetch(`https://trello.com/1/cards/${cardId}?key=${trelloKey}&token=${trelloToken}&idList=${listId}`, {
     method: "PUT",
-    body: JSON.stringify({
+    /* body: JSON.stringify({
       key: trelloKey,
       token: trelloToken,
       idList: listId
-    })
+    }) */
   });
 
   return response;
