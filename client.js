@@ -8,7 +8,7 @@ const assignCardToList = async (cardId, listId) => {
     }) */
   });
 
-  return response;
+  return await response.json();
 }
 
 TrelloPowerUp.initialize({
@@ -24,6 +24,7 @@ TrelloPowerUp.initialize({
 
         try {
           const response = await assignCardToList(cardId, listId);
+          console.log("🚀 ~ file: client.js:27 ~ response", response);
           t.alert({
             message: response?.id ? "Success" : "Failure",
             duration: 2
