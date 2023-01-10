@@ -31,12 +31,10 @@ TrelloPowerUp.initialize({
         const card = await t.card("id");
         const cardId = card?.id;
         const board = await t.board("id", "labels");
-        const boardId = board?.id;
         const boardLabels = board?.labels;
         const doneLabelId = boardLabels.filter(label => label.name === "Done")?.at(0)?.id;
 
         const member = await t.member("id");
-        console.log("🚀 ~ file: client.js:47 ~ member", member);
         const memberId = member?.id;
 
         const lists = await t.lists("id", "name");
@@ -51,13 +49,13 @@ TrelloPowerUp.initialize({
 
           const response2 = await addLabelsToCard(cardId, doneLabelId);
           t.alert({
-            message: response2?.id ? "Added Done Label Successfully" : "Failed To Add Done Label",
+            message: response2?.length ? "Added Done Label Successfully" : "Failed To Add Done Label",
             duration: 2
           });
 
           const response3 = await addMemberToCard(cardId, memberId);
           t.alert({
-            message: response3?.id ? "Added You Successfully To The Card" : "Failed To Add You To The Card",
+            message: response3?.length ? "Added You Successfully To The Card" : "Failed To Add You To The Card",
             duration: 2
           });
         }
