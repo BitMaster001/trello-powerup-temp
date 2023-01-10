@@ -1,8 +1,9 @@
-const trelloKey = "e09972fad7a1cef5121e81cfea900c23";
-const trelloToken = "63bd1af6b5071a0248cf8894/ATTSeA9qeNry894CsIFuvVrH1eCYV4J9H5qvVYqJig6dXgc6uITunqEbQLPQ0NvUDo4lD9684363";
+const trelloKey = "7d3783648aff190e22e126989b4d6150";
+const trelloToken = "c0d2c69e2fcb933d8e345797a661723f9b308264f61a0e049c02ab239f88be7f";
+const appName = "GT Card Buttons";
 
 const assignCardToList = (cardId, listId) => {
-  fetch(`https://api.trello.com/1/cards/${cardId}?key=${trelloKey}&token=${trelloToken}`, {
+  fetch(`https://api.trello.com/1/cards/${cardId}`, {
     method: "PUT",
     body: JSON.stringify({
       idList: listId
@@ -37,4 +38,7 @@ TrelloPowerUp.initialize({
       }
     }];
   },
+}, {
+  appKey: trelloKey,
+  appName: appName
 });
